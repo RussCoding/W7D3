@@ -28,7 +28,7 @@ RSpec.describe User, type: :model do
 
         context "user exists" do
             it "should find the user by username and password" do
-                expect(User.find_by_credentials(user.username, user.password)).to be(user)
+                expect(User.find_by_credentials(user.username, user.password)).to eq(user)
             end
         end
 

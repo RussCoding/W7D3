@@ -19,7 +19,7 @@ RSpec.describe UsersController, type: :controller do
     describe 'GET #show' do
         it "renders the show view" do
             create(:user)
-            get :show, params: {id: user.id}
+            get :show, params: { id: User.last.id }
             expect(response).to render_template(:show)
         end
     end
@@ -27,16 +27,16 @@ RSpec.describe UsersController, type: :controller do
     describe "POST #create" do
         context "valid params" do
             it "creates a new user" do
-                post :create, user_params: {username: "BigRuss", password: "password1"}
+                post :create, params: { user: {username: "BigRuss", password: "password1"} }
                 expect(response).to have_http_status(302) 
-                expect(response).to redirect_to(goals_url)
+                expect(response).to redirect_to(users_url)
             end
         end
         
         context "invalid params" do
             it "renders new template" do 
                 create(:user)
-                post :create, params: {username: user.username, password: user.password}
+                post :create, params: { user: {username: "", password: "short"} }
                 expect(response).to render_template(:new)
             end
         end
